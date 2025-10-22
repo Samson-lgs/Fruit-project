@@ -1,7 +1,7 @@
 import joblib
 
 def load_model(name):
-    return joblib.load(f"models/{name}.pkl")
+    return joblib.load(f"backend/models/{name}.pkl")
 
 def predict(model, features):
     label = model.predict([features])[0]

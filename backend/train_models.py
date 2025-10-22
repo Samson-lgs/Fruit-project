@@ -18,7 +18,7 @@ def load_dataset(data_dir):
             y.append(label)
     return np.array(X), np.array(y)
 
-X_train, y_train = load_dataset("images")
+X_train, y_train = load_dataset("backend/images")
 
 models = {
     "logistic": LogisticRegression(max_iter=1000),
@@ -30,4 +30,4 @@ models = {
 
 for name, model in models.items():
     model.fit(X_train, y_train)
-    joblib.dump(model, f"models/{name}.pkl")
+    joblib.dump(model, f"backend/models/{name}.pkl")
