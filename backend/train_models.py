@@ -18,7 +18,7 @@ def load_dataset(data_dir):
             y.append(label)
     return np.array(X), np.array(y)
 
-X_train, y_train = load_dataset("backend/images")
+X_train, y_train = load_dataset(os.path.join(os.path.dirname(__file__), "images"))
 
 models = {
     "logistic": LogisticRegression(max_iter=1000),

@@ -4,12 +4,15 @@ from model_utils import load_model, predict
 from PIL import Image
 import tempfile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import Request
 app = FastAPI()
 
 @app.post("/predict")
 async def classify_fruit(file: UploadFile = File(...), model_name: str = Form(...)):
     with tempfile.NamedTemporaryFile(delete=False) as tmp:
-        tmp.write(await file.read())
+        content = await file.read()
+        tmp.write(content)
+        tmp.flush()
         features = extract_color_histogram(tmp.name)
     model = load_model(model_name)
     label, confidence = predict(model, features)
