@@ -9,10 +9,20 @@ function App() {
   const [selectedModel, setSelectedModel] = useState("logistic");
   const [result, setResult] = useState(null);
 
+  const [error, setError] = useState(null);
+
   const handleSubmit = async () => {
     if (file && selectedModel) {
-      const res = await classifyFruit(file, selectedModel);
-      setResult(res);
+      try {
+        setError(null);
+        const res = await classifyFruit(file, selectedModel);
+        setResult(res);
+      } catch (err) {
+        setError(err.message || 'An error occurred while classifying the image');
+        console.error('Error in handleSubmit:', err);
+      }
+    } else {
+      setError('Please select both an image and a model');
     }
   };
 
@@ -35,6 +45,11 @@ function App() {
           </div>
 
           <ResultDisplay result={result} />
+          {error && (
+            <div className="mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+              {error}
+            </div>
+          )}
       </div>
         <Footer />
     </div>
